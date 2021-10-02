@@ -1,0 +1,90 @@
+#wifi
+#nmcli d wifi c Skynet --ask
+#wifi
+sudo yum  -y install nano
+#upgrade centos 7 to 8
+yum install epel-release -y
+yum install yum-utils
+yum install rpmconf
+rpmconf -a
+package-cleanup --leaves
+package-cleanup --orphans
+yum install dnf
+dnf -y remove yum yum-metadata-parser
+rm -Rf /etc/yum
+dnf upgrade
+dnf install http://mirror.centos.org/centos/8/BaseOS/x86_64/os/Packages/centos-linux-repos-8-2.el8.noarch.rpm http://mirror.centos.org/centos/8/BaseOS/x86_64/os/Packages/centos-linux-release-8.3-1.2011.el8.noarch.rpm http://mirror.centos.org/centos/8/BaseOS/x86_64/os/Packages/centos-gpg-keys-8-2.el8.noarch.rpm
+dnf -y upgrade https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpmconf
+dnf clean all
+rpm -e `rpm -q kernel`
+rpm -e --nodeps sysvinit-tools
+dnf -y --releasever=8 --allowerasing --setopt=deltarpm=false distro-sync
+dnf -y install kernel-core
+dnf -y groupupdate "Core" "Minimal Install"
+cat /etc/redhat-release
+dnf install --allowerasing http://mirror.centos.org/centos/8/BaseOS/x86_64/os/Packages/centos-linux-repos-8-2.el8.noarch.rpm http://mirror.centos.org/centos/8/BaseOS/x86_64/os/Packages/centos-linux-release-8.3-1.2011.el8.noarch.rpm http://mirror.centos.org/centos/8/BaseOS/x86_64/os/Packages/centos-gpg-keys-8-2.el8.noarch.rpm
+dnf -y upgrade https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+#upgrade centos 7 to 8
+#SSH
+sudo yum  install -y epel-release
+sudo yum  -y install openssh-server open-ssh-clients 
+systemctl start sshd
+systemctl status sshd
+systemctl enable s
+#SSH
+#zabix
+rpm -Uvh https://repo.zabbix.com/zabbix/5.2/rhel/8/x86_64/zabbix-release-5.2-1.el8.noarch.rpmconf
+dnf clean all 
+dnf install zabbix-server-mysql zabbix-web-mysql zabbix-apache-conf zabbix-agent 
+mysql -uroot -p
+create database zabbix character set utf8 collate utf8_bin;
+create user zabbix@localhost identified by 'password';
+grant all privileges on zabbix.* to zabbix@localhost;
+quit;
+zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p zabbix
+nano  /etc/zabbix/zabbix_server.conf 
+systemctl restart zabbix-server zabbix-agent httpd php-fpm
+systemctl enable zabbix-server zabbix-agent httpd php-fpm 
+firefox http://server_ip_or_name/zabbix
+firefox https://www.zabbix.com/documentation/current/manual/installation/install#installing_frontend
+wget https://www.zabbix.com/download_sources
+tar -zxvf zabbix-5.2.0.tar.gz
+groupadd --system zabbix
+useradd --system -g zabbix -d /usr/lib/zabbix -s /sbin/nologin -c "Zabbix Monitoring System" zabbix
+addgroup --system --quiet zabbix
+adduser --quiet --system --disabled-login --ingroup zabbix --home /var/lib/zabbix --no-create-home zabbix_server
+$HOME/.my.cnf)
+mkdir -m u=rwx,g=rwx,o= -p /usr/lib/zabbix
+chown zabbix:zabbix /usr/lib/zabbix_server
+mkdir -m u=rwx,g=rwx,o= -p /var/lib/zabbix
+chown zabbix:zabbix /var/lib/zabbix
+./configure --help
+./configure --enable-server --enable-agent --with-mysql --enable-ipv6 --with-net-snmp --with-libcurl --with-libxml2
+./configure --enable-server --with-postgresql --with-net-snmp
+./configure --prefix=/usr --enable-proxy --with-net-snmp --with-sqlite3 --with-ssh2
+./configure --enable-agent
+./configure --enable-agent2
+checking for main in -lmysqlclient... no
+configure: error: Not found mysqlclient library
+/usr/bin/ld: cannot find -lssl
+/usr/bin/ld: cannot find -lcrypto
+make install
+shell> zabbix_server
+shell> zabbix_agentd
+shell> zabbix_proxy
+mkdir <htdocs>/zabbix
+cd ui
+cp -a . <htdocs>/zabbix
+locale/make_mo.sh
+./configure --enable-java --prefix=$PREFIX
+make
+make install
+DBPassword=password
+#zabix
+#xfce
+sudo yum groups install Xfce
+sudo yum groups install Xfce
+starx
+#xfce
+sudo yum  -y install kate
+sudo yum  install -y firefox
